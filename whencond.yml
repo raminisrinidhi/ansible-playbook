@@ -4,8 +4,38 @@
   become: true
   connection: ssh
   tasks:
-    - name: gather installed package facts
-      action: package_facts manager=auto
-    - name: installing git package
-      action: yum pkg=git state=present
-      when: "'git' not in ansible_facts.packages"
+    - name: to check whether git is installed for not
+      shell: git -v
+      register: git_check
+      ignore_errors: true
+    
+    - name: to install git
+      yum:
+        name: git
+        state: present
+      when: git_check.rc!=0
+    - name: Check if Java is installed
+      shell: java -version
+      register: java_check
+      ignore_errors: true
+ 
+    - name: Install Java if not present
+      yum:
+        name: java-17-amazon-corretto.x86_64
+        state: present
+      when: java_check.rc != 0
+ 
+    - name: Check if Python is installed
+      shell: which python3
+      register: python_check
+      ignore_errors: true
+ 
+    - name: Install Python if not present
+      yum:
+        name: python3
+        state: present
+      when: python_check.rc != 0
+ 
+    - name: Continue with next task
+      debug:
+        msg: "All required packages are now installed."
