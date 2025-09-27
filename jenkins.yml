@@ -18,7 +18,7 @@
         state: present
     - name: Install Epel Release
       yum:
-        name: epel-release
+        name: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
         state: present
         disable_gpg_check: true
     - name: Install Jenkins
