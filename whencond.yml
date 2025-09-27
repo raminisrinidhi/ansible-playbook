@@ -4,7 +4,8 @@
   become: true
   connection: ssh
   tasks:
-    - name: "installing git package"
+    - name: gather installed package facts
+      action: package_facts manager=auto
+    - name: installing git package
       action: yum pkg=git state=present
       when: "'git' not in ansible_facts.packages"
-      
