@@ -1,7 +1,7 @@
 ---
 - hosts: webservers
   user: ansible
-  become: yes
+  become: true 
   connection: ssh
   tasks:
     - name: Install Openjdk
@@ -33,7 +33,7 @@
       systemd:
         name: jenkins
         enabled: true
-    - name: Wait for thr port
+    - name: Wait for the port
       wait_for:
         delay: 30
         port: 8080
