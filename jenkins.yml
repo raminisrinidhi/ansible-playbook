@@ -10,17 +10,16 @@
         state: present
     - name: Download the Jenkins Repo
       get_url:
-        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        url: "https://pkg.jenkins.io/redhat-stable/jenkins.repo"
         dest: /etc/yum.repos.d/jenkins.repo
     - name: Import Key
       rpm_key:
-        key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+        key: "https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key"
         state: present
     - name: Install Epel Release
       yum:
-        name: http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        name: epel-release
         state: present
-        disable_gpg_check: true
     - name: Install Jenkins
       yum:
         name: jenkins
